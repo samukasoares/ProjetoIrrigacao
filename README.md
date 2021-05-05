@@ -1,1 +1,1 @@
-# projetoIrrigacao
+Criei esse projeto para suprir a necessidade que tinha de um sistema de irrigação para chácara onde moro. Para isso, utilizei o arduino com alguns módulos e apesar de ser um projeto simples, ficou bem legal.
