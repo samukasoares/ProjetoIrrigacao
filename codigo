@@ -118,3 +118,4 @@ void imprimirHorario (){
   lcd.setCursor(3,1);
   lcd.print(now.minute());
 }
+ 
