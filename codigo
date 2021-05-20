@@ -16,9 +16,9 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 //variaveis
 const int limiarSeco = 60;
 const int tempSeg = 5000;       //5 segundos de segurança
-const int tempoIrrigacao = 12;   // Tempo irrigação em minutos
+const int tempoIrrigacao = 1;   // Tempo irrigação em minutos
 int umidadeSolo = 0;
-const int horaIrrigar = 17;     //Horario para irrigar (24 horas)
+const int horaIrrigar = 13;     //Horario para irrigar
 
 void setup() {
   
@@ -59,13 +59,8 @@ void loop() {
   for (int i = 0; i<1440; i++){                     
     DateTime now = rtc.now();
     imprimirHorario();
-    lcd.setCursor(0, 0);
-    lcd.print("Umidade: ");
-    umidadeSolo = analogRead(pinoSensor);
-    umidadeSolo = map(umidadeSolo, 1023, 0, 0, 100);
-    lcd.print(umidadeSolo);
-    lcd.print(" %");
-
+    calcularUmidade();
+    
     //Se o solo estiver seco e for 17 horas
     if (now.hour() == horaIrrigar && umidadeSolo<limiarSeco){
       irrigar();
@@ -88,6 +83,7 @@ void irrigar(){
     }
     
     for(int j = 0; j<tempoIrrigacao; j++){
+      calcularUmidade();
       imprimirHorario();
       lcd.setCursor(6,1);
       lcd.print("Regando:A");
@@ -117,4 +113,13 @@ void imprimirHorario (){
   lcd.print(":");
   lcd.setCursor(3,1);
   lcd.print(now.minute());
+}
+
+void calcularUmidade(){
+    lcd.setCursor(0,0);
+    lcd.print("Umidade: ");
+    umidadeSolo = analogRead(pinoSensor);
+    umidadeSolo = map(umidadeSolo, 1023, 0, 0, 100);
+    lcd.print(umidadeSolo);
+    lcd.print("% ");
 }
